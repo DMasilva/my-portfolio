@@ -1,0 +1,281 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+% \end{tabular*}
+
+\begin{center}
+    \textbf{\Huge \scshape David Onyango Owuor} \\ \vspace{1pt}
+    \small \href{mailto:david.owuor@ndsu.edu}{\underline{david.owuor@ndsu.edu}} $|$ 
+    \href{https://www.linkedin.com/in/david-onyango-082750201/}{\underline{LinkedIn Profile}} $|$
+    \href{https://github.com/DMasilva}{\underline{GitHub Profile}}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {North Dakota State University}{Fargo, ND}
+      {Masters of Computer Science}{Aug. 2023 -- Present}
+    \resumeSubheading
+      {Technical University of Kenya}{Nairobi, KE}
+      {Bachelors of Science, Information Science}{Sep. 2016 -- Nov. 2020}
+      \resumeSubheading
+      {Moringa School and Flatiron}{Nairobi, KE}
+      {Certificate in Software Development}{Nov. 2022 -- Jun. 2023}
+  \resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {IDC Student Supervisor}{Nov. 2024 -- Present}
+      {Instruction Design Center, IT Division}{NDSU, ND}
+      \resumeItemListStart
+        \resumeItem{Supervise a team of student employees, ensuring tasks are completed efficiently and accurately}
+        \resumeItem{Provide technical support and troubleshooting for multimedia and academic technologies}
+        \resumeItem{Train faculty, staff, and students on various learning technologies and software tools}
+        \resumeItem{Develop instructional materials, user guides, and training documentation}
+        \resumeItem{Manage FreshService ticketing system, resolving technical issues efficiently}
+      \resumeItemListEnd
+      
+% -----------Multiple Positions Heading-----------
+%    \resumeSubSubheading
+%     {Software Engineer I}{Oct 2014 - Sep 2016}
+%     \resumeItemListStart
+%        \resumeItem{Apache Beam}
+%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+%     \resumeItemListEnd
+%    \resumeSubHeadingListEnd
+%-------------------------------------------
+
+    \resumeSubheading
+      {Grad Student Technology Assistant}{Aug. 2023 -- Oct. 2024}
+      {Instruction Design Center, IT Division}{NDSU, ND}
+      \resumeItemListStart
+        \resumeItem{Assisted faculty and staff in integrating technology into teaching and learning}
+        \resumeItem{Provided LMS (Blackboard) support and troubleshooting}
+        \resumeItem{Created tutorial videos and training resources for academic software}
+        \resumeItem{Led technology workshops and one-on-one training sessions for faculty and students}
+        \resumeItem{Monitored IT system functionality and escalated complex issues}
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {IT Assistant}{Dec. 2020 -- July 2022}
+      {Solar Rays Energy Sacco}{Nairobi, KE}
+      \resumeItemListStart
+        \resumeItem{Provided technical support to end-users, resolving hardware and software issues promptly}
+        \resumeItem{Managed and monitored IT infrastructure, including servers and network devices}
+        \resumeItem{Assisted in deploying software and managing updates across the organization’s systems}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+\section{Internships}
+ \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Full Stack Developer Intern}{Mar. 2025 -- Present}
+      {Pavewise Pro}{Fargo, ND}
+      \resumeItemListStart
+        \resumeItem{Write and implement efficient, reusable, and reliable code in TypeScript using React for frontend development}
+        \resumeItem{Support back-end development using Ruby on Rails}
+        \resumeItem{Write tests using various frameworks, to ensure high-quality software}
+        \resumeItem{Proactively debug and fix issues that arise in the software}
+        \resumeItem{Evaluate and implement pipeline or deployment strategies to optimize developer workflow}
+      \resumeItemListEnd
+
+        \resumeSubheading
+      {Front-end Web Developer Intern}{Feb. 2023 -- Aug. 2023}
+      {TIENDA Logistics}{Nairobi, KE}
+      \resumeItemListStart
+        \resumeItem{Developed and optimized user interfaces using HTML, CSS, JavaScript, and React}
+        \resumeItem{Implemented responsive design techniques to enhance user experience across various devices}
+        \resumeItem{Conducted testing and debugging to ensure cross-browser compatibility and performance}
+      \resumeItemListEnd
+      
+       \resumeSubheading
+      {IT Intern}{May 2019 -- Oct 2019}
+      {KUSCCO Ltd.}{Nairobi, KE}
+      \resumeItemListStart
+        \resumeItem{Worked on network configuration and troubleshooting}
+        \resumeItem{Assisted in troubleshooting software systems and resolving technical issues}
+        \resumeItem{Documented IT procedures and participated in implementing software and security updates}
+      \resumeItemListEnd
+      
+    \resumeSubHeadingListEnd
+
+      
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+    \resumeProjectHeading
+          {\textbf{Hybrid Approach to Software Testing} $|$ \emph{Java, Maven, Python, GPT-3}}{May 2024 -- Present}
+          \resumeItemListStart
+            \resumeItem{Conducting master's research focused on integrating Large Language Models (LLMs) with traditional software testing methods to enhance efficiency and code coverage}
+          \resumeItemListEnd
+          \resumeProjectHeading
+          {\textbf{Zoom Phone Migration Training} $|$ \emph{Zoom, Training, Communication}}{Jun 2024}
+          \resumeItemListStart
+            \resumeItem{Led training sessions for faculty and staff at NDSU on Zoom Phone migration, ensuring a smooth transition to the new system by providing comprehensive training and support materials}
+          \resumeItemListEnd
+          \resumeProjectHeading
+          {\textbf{Blackboard Ultra Migration} $|$ \emph{Blackboard, Training, Course Update}}{Ongoing}
+          \resumeItemListStart
+            \resumeItem{Provide training to students on the new Ultra interface and update courses migrated from Blackboard Original to ensure smooth transitions and project success}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Theater Tours and Travels} $|$ \emph{Java, React, JavaScript, SQL, Tailwind CSS}}{Feb 2024 -- Aug 2024}
+          \resumeItemListStart
+            \resumeItem{Developed a dynamic tours and travel website that allows users to easily browse, book, and manage tours and other travel amenities}
+          \resumeItemListEnd
+          \resumeProjectHeading
+          {\textbf{Moringa Application Portal} $|$ \emph{JavaScript, React, Tailwind CSS, Ruby on Rails, PostgreSQL}}{Oct 2022 -- Jun 2023}
+          \resumeItemListStart
+            \resumeItem{Built a full-stack web app to manage student applications for Moringa Institute}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+
+
+%
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+    \textbf{Academic Technologies}{: Blackboard Ultra, Blackboard Original, Zoom, Canvas} \\
+    \textbf{Editing and Teaching Software}{: Camtasia, Adobe Suite, Yuja, PointSolutions} \\
+    \textbf{Assistive Technologies}{: JAWS, NVDA, VoiceOver, ZoomText, Read \& Writes} \\
+     \textbf{Languages}{: Java, Python, SQL (Postgres, MySql, SQLite), JavaScript, HTML/CSS, Ruby} \\
+     \textbf{Frameworks}{: React, Tailwind CSS, Bootstrap, Node.js, Ruby on Rails, JUnit, WordPress, FastAPI} \\
+     \textbf{Developer Tools}{: Git, Docker, VS Code, Visual Studio, IntelliJ, Eclipse} \\
+     \textbf{Libraries}{: React Router, React Context, Fetch API, Axios}
+    }}
+ \end{itemize}
+
+
+%-------------------------------------------
+
+%-----------PROGRAMMING SKILLS-----------
+\section{Certifications and Additional Experience}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+    {Customer Service and Technical training} \\
+    {Experience supporting faculty and staff in academic environments} \\
+    {Strong communication skills for engaging with technical and non-technical users} \\
+    }}
+ \end{itemize}
+
+
+%-------------------------------------------
+\end{document}
