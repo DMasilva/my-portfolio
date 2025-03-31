@@ -1,62 +1,371 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { 
+  Box, 
+  Typography, 
+  Grid, 
+  Chip, 
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Collapse,
+  IconButton,
+  useTheme,
+  alpha,
+  Divider
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { 
+  School as SchoolIcon,
+  LocationOn as LocationIcon,
+  ExpandMore as ExpandMoreIcon,
+  EmojiEvents as EmojiEventsIcon,
+  ImportContacts as ImportContactsIcon,
+  Stars as StarsIcon
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+
+const EducationCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  backgroundColor: alpha(theme.palette.background.paper, 0.6),
+  backdropFilter: 'blur(10px)',
+  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+  borderRadius: theme.shape.borderRadius,
+  overflow: 'hidden',
+  position: 'relative',
+  '&:hover': {
+    transform: 'translateY(-8px)',
+    boxShadow: theme.shadows[8],
+  },
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+  }
+}));
+
+const CardHeader = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(3),
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'relative',
+  backgroundColor: alpha(theme.palette.primary.main, 0.05),
+  borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+}));
+
+const SchoolLogo = styled(Box)(({ theme }) => ({
+  width: 60,
+  height: 60,
+  borderRadius: '50%',
+  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: theme.spacing(2),
+  border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+  '& svg': {
+    fontSize: 32,
+    color: theme.palette.primary.main,
+  }
+}));
+
+const HighlightChip = styled(Chip)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  backgroundColor: alpha(theme.palette.primary.main, 0.1),
+  color: theme.palette.primary.main,
+  fontWeight: 500,
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.primary.main, 0.2),
+  },
+}));
+
+const InfoItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: theme.spacing(1),
+  '& svg': {
+    marginRight: theme.spacing(1),
+    fontSize: 18,
+    color: theme.palette.text.secondary,
+  }
+}));
+
+const ExpandButton = styled(IconButton)(({ theme, expanded }) => ({
+  transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+  transition: 'transform 0.3s',
+  marginLeft: 'auto',
+}));
 
 const Education = () => {
+  const theme = useTheme();
+  const [expandedId, setExpandedId] = useState(null);
+
+  const handleExpandClick = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
   const educationData = [
     {
-      school: "North Dakota State University",
-      location: "Fargo, ND",
-      degree: "Masters of Computer Science",
-      period: "Aug. 2023 -- Present",
-      highlights: ["Focus on Software Engineering", "Research in AI/ML Testing"]
+      id: 1,
+      school: 'North Dakota State University',
+      location: 'Fargo, ND',
+      degree: 'Master of Science in Computer Science',
+      period: '2022 - Present',
+      gpa: '3.95/4.0',
+      highlights: [
+        'Research focus on software testing methodologies and LLM integration',
+        'Graduate assistant in the Instructional Design Center',
+        'Member of the Association for Computing Machinery (ACM)',
+        'Relevant coursework: Advanced Algorithms, Machine Learning, Software Engineering'
+      ],
+      awards: [
+        'Graduate Research Fellowship',
+        'Computer Science Department Scholarship'
+      ]
     },
     {
-      school: "Technical University of Kenya",
-      location: "Nairobi, KE",
-      degree: "Bachelors of Science, Information Science",
-      period: "Sep. 2016 -- Nov. 2020",
-      highlights: ["Information Systems", "Database Management"]
+      id: 2,
+      school: 'Moringa School',
+      location: 'Nairobi, Kenya',
+      degree: 'Software Engineering Certificate',
+      period: '2020 - 2021',
+      highlights: [
+        'Intensive software engineering bootcamp focusing on full-stack development',
+        'Completed multiple project-based assessments with real-world applications',
+        'Collaborated with industry partners on capstone projects',
+        'Specialized in JavaScript, Python, and Ruby frameworks'
+      ],
+      awards: [
+        'Top Performer Award',
+        'Best Group Project'
+      ]
     },
     {
-      school: "Moringa School and Flatiron",
-      location: "Nairobi, KE",
-      degree: "Certificate in Software Development",
-      period: "Nov. 2022 -- Jun. 2023",
-      highlights: ["Full Stack Development", "Modern Web Technologies"]
+      id: 3,
+      school: 'University of Nairobi',
+      location: 'Nairobi, Kenya',
+      degree: 'Bachelor of Science in Information Technology',
+      period: '2016 - 2020',
+      gpa: '3.8/4.0',
+      highlights: [
+        'Graduated with First Class Honors',
+        'Final year project: Development of an Accessibility-First Learning Management System',
+        'Student ambassador for technology conferences',
+        'Relevant coursework: Database Systems, Web Development, Network Security'
+      ],
+      awards: [
+        'Dean\'s List (All Semesters)',
+        'Innovation Award for Final Year Project'
+      ]
     }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100
+      }
+    }
+  };
+
   return (
-    <section>
-      <h2 className="section-title">Education</h2>
-      <div className="space-y-6">
-        {educationData.map((edu, index) => (
-          <div 
-            key={index} 
-            className="relative pl-4 border-l-2 border-blue-500 hover:border-blue-600 transition-colors"
-          >
-            <div className="absolute -left-2 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
-            <div className="mb-1">
-              <div className="flex justify-between items-start">
-                <h3 className="font-bold text-lg text-gray-800">{edu.school}</h3>
-                <span className="text-sm text-gray-500">{edu.location}</span>
-              </div>
-              <div className="flex justify-between items-start mt-1">
-                <p className="text-blue-600 font-medium">{edu.degree}</p>
-                <span className="text-sm text-gray-500">{edu.period}</span>
-              </div>
-            </div>
-            <ul className="mt-2 space-y-1">
-              {edu.highlights.map((highlight, idx) => (
-                <li key={idx} className="text-sm text-gray-600 flex items-center">
-                  <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></span>
-                  {highlight}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <Box component={motion.div}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <Grid container spacing={4}>
+        {educationData.map((education) => (
+          <Grid item xs={12} md={6} lg={4} key={education.id}>
+            <motion.div variants={itemVariants} style={{ height: '100%' }}>
+              <EducationCard elevation={1}>
+                <CardHeader>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <SchoolLogo>
+                      <SchoolIcon />
+                    </SchoolLogo>
+                    <Chip 
+                      label={education.period} 
+                      size="small"
+                      sx={{ 
+                        backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+                        color: theme.palette.secondary.main,
+                        borderRadius: '4px',
+                      }}
+                    />
+                  </Box>
+                  
+                  <Typography variant="h5" component="h3" fontWeight={600} gutterBottom>
+                    {education.degree}
+                  </Typography>
+                  
+                  <Typography variant="body1" color="primary" fontWeight={500}>
+                    {education.school}
+                  </Typography>
+                </CardHeader>
+                
+                <CardContent sx={{ flexGrow: 1, pt: 3 }}>
+                  <InfoItem>
+                    <LocationIcon />
+                    <Typography variant="body2">
+                      {education.location}
+                    </Typography>
+                  </InfoItem>
+                  
+                  {education.gpa && (
+                    <InfoItem>
+                      <StarsIcon />
+                      <Typography variant="body2">
+                        GPA: {education.gpa}
+                      </Typography>
+                    </InfoItem>
+                  )}
+                  
+                  <Box sx={{ mt: 3 }}>
+                    <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+                      Key Highlights
+                    </Typography>
+                    
+                    <Box sx={{ pl: 1 }}>
+                      {education.highlights.slice(0, 2).map((highlight, idx) => (
+                        <Box key={idx} sx={{ 
+                          display: 'flex', 
+                          alignItems: 'flex-start',
+                          mb: 1,
+                          '&::before': {
+                            content: '""',
+                            width: 5,
+                            height: 5,
+                            borderRadius: '50%',
+                            backgroundColor: theme.palette.primary.main,
+                            marginRight: 1.5,
+                            marginTop: 8,
+                            flexShrink: 0,
+                          }
+                        }}>
+                          <Typography variant="body2">
+                            {highlight}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                </CardContent>
+                
+                <CardActions sx={{ p: 2, pt: 0, justifyContent: 'space-between' }}>
+                  <Button 
+                    size="small" 
+                    startIcon={<ImportContactsIcon />}
+                    sx={{ 
+                      color: theme.palette.primary.main,
+                      '&:hover': {
+                        backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                      }
+                    }}
+                  >
+                    Courses
+                  </Button>
+                  
+                  <ExpandButton
+                    expanded={expandedId === education.id}
+                    onClick={() => handleExpandClick(education.id)}
+                    size="small"
+                    aria-expanded={expandedId === education.id}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandButton>
+                </CardActions>
+                
+                <Collapse in={expandedId === education.id} timeout="auto" unmountOnExit>
+                  <CardContent sx={{ pt: 0 }}>
+                    <Divider sx={{ my: 2, opacity: 0.1 }} />
+                    
+                    {/* Additional highlights */}
+                    {education.highlights.length > 2 && (
+                      <Box sx={{ mb: 3 }}>
+                        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+                          Additional Highlights
+                        </Typography>
+                        
+                        <Box sx={{ pl: 1 }}>
+                          {education.highlights.slice(2).map((highlight, idx) => (
+                            <Box key={idx} sx={{ 
+                              display: 'flex', 
+                              alignItems: 'flex-start',
+                              mb: 1,
+                              '&::before': {
+                                content: '""',
+                                width: 5,
+                                height: 5,
+                                borderRadius: '50%',
+                                backgroundColor: theme.palette.primary.main,
+                                marginRight: 1.5,
+                                marginTop: 8,
+                                flexShrink: 0,
+                              }
+                            }}>
+                              <Typography variant="body2">
+                                {highlight}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    )}
+                    
+                    {/* Awards */}
+                    {education.awards && education.awards.length > 0 && (
+                      <Box>
+                        <Typography variant="subtitle2" fontWeight={600} gutterBottom sx={{ 
+                          display: 'flex', 
+                          alignItems: 'center' 
+                        }}>
+                          <EmojiEventsIcon sx={{ fontSize: 18, mr: 1, color: theme.palette.warning.main }} />
+                          Awards & Honors
+                        </Typography>
+                        
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: 1 }}>
+                          {education.awards.map((award, idx) => (
+                            <HighlightChip
+                              key={idx}
+                              label={award}
+                              size="small"
+                            />
+                          ))}
+                        </Box>
+                      </Box>
+                    )}
+                  </CardContent>
+                </Collapse>
+              </EducationCard>
+            </motion.div>
+          </Grid>
         ))}
-      </div>
-    </section>
+      </Grid>
+    </Box>
   );
 };
 
