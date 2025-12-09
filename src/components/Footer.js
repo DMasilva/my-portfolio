@@ -1,285 +1,105 @@
 import React from 'react';
-import { 
-  Box, 
-  Container, 
-  Typography, 
-  Grid, 
-  IconButton, 
-  Button,
-  List,
-  ListItem,
-  Divider,
-  useTheme,
-  alpha,
-  Link
-} from '@mui/material';
+import { Box, Container, Typography, Link as MuiLink } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { 
-  Email, 
-  GitHub, 
-  LinkedIn, 
-  ArrowUpward,
-  KeyboardArrowRight
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { GitHub, LinkedIn, Email, ArrowUpward } from '@mui/icons-material';
 
 const FooterWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.background.paper, 0.8),
-  backdropFilter: 'blur(10px)',
+  background: theme.palette.mode === 'dark' ? '#0b1120' : '#f1f5f9',
   color: theme.palette.text.primary,
-  position: 'relative',
-  padding: theme.spacing(10, 0, 6),
-  marginTop: theme.spacing(12),
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '1px',
-    background: `linear-gradient(90deg, 
-      transparent,
-      ${alpha(theme.palette.primary.main, 0.3)},
-      ${alpha(theme.palette.secondary.main, 0.3)},
-      transparent
-    )`,
-  },
+  padding: '48px 0 24px',
 }));
 
-const FooterTitle = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-  fontWeight: 700,
-  position: 'relative',
-  display: 'inline-block',
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    bottom: -8,
-    left: 0,
-    width: 30,
-    height: 3,
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-    borderRadius: '2px',
-  },
-}));
-
-const FooterLink = styled(Link)(({ theme }) => ({
+const SocialLink = styled(MuiLink)(({ theme }) => ({
   color: theme.palette.text.secondary,
-  textDecoration: 'none',
   display: 'inline-flex',
   alignItems: 'center',
-  transition: 'all 0.2s ease',
+  margin: '0 12px',
+  transition: 'color 0.2s ease',
   '&:hover': {
-    color: theme.palette.primary.main,
-    transform: 'translateX(3px)',
+    color: theme.palette.text.primary,
   },
 }));
 
-const SocialButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.background.default, 0.7),
-  border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-  color: theme.palette.text.primary,
-  margin: theme.spacing(0.5),
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-    transform: 'translateY(-3px)',
-    boxShadow: '0 5px 10px rgba(0,0,0,0.05)',
-  },
-}));
-
-const SubscribeInput = styled('input')(({ theme }) => ({
-  padding: theme.spacing(1.5, 2),
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.background.default, 0.7),
-  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-  color: theme.palette.text.primary,
-  width: '100%',
-  marginBottom: theme.spacing(1.5),
-  outline: 'none',
-  '&:focus': {
-    borderColor: alpha(theme.palette.primary.main, 0.5),
-    boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.1)}`,
-  },
-}));
-
-const ScrollTopButton = styled(Button)(({ theme }) => ({
-  position: 'absolute',
-  top: -25,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  minWidth: 50,
-  width: 50,
-  height: 50,
-  padding: 0,
+const BackToTop = styled('button')(({ theme }) => ({
+  position: 'fixed',
+  bottom: '32px',
+  right: '32px',
+  width: '48px',
+  height: '48px',
   borderRadius: '50%',
-  backgroundColor: alpha(theme.palette.primary.main, 0.9),
-  color: theme.palette.common.white,
-  boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+  background: theme.palette.primary.main,
+  color: theme.palette.background.default,
+  border: 'none',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+  transition: 'all 0.2s ease',
+  zIndex: 100,
   '&:hover': {
-    backgroundColor: theme.palette.primary.main,
-    boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
+    background: theme.palette.text.primary,
+    transform: 'translateY(-2px)',
   },
 }));
 
 const Footer = () => {
-  const theme = useTheme();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const year = new Date().getFullYear();
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
-  const quickLinks = [
-    { title: "About Me", href: "#about" },
-    { title: "Projects", href: "#projects" },
-    { title: "Skills", href: "#skills" },
-    { title: "Experience", href: "#experience" },
-    { title: "Education", href: "#education" },
-    { title: "Contact", href: "#contact" }
-  ];
-
-  const socialLinks = [
-    { icon: <Email />, href: "mailto:david.owuor@ndsu.edu", label: "Email" },
-    { icon: <LinkedIn />, href: "https://www.linkedin.com/in/david-onyango-082750201/", label: "LinkedIn" },
-    { icon: <GitHub />, href: "https://github.com/DMasilva", label: "GitHub" }
-  ];
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100
-      }
-    }
-  };
-
   return (
-    <FooterWrapper component="footer">
-      <ScrollTopButton
-        variant="contained"
-        onClick={scrollToTop}
-        component={motion.button}
-        whileHover={{ y: -5 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <ArrowUpward />
-      </ScrollTopButton>
+    <>
+      <FooterWrapper>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+              David Onyango Owuor
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3, maxWidth: '600px', mx: 'auto' }}>
+              Full Stack Developer & Academic Technology Specialist
+            </Typography>
+            <Box sx={{ mb: 3 }}>
+              <SocialLink
+                href="mailto:david.owuor@ndsu.edu"
+                aria-label="Email"
+              >
+                <Email />
+              </SocialLink>
+              <SocialLink
+                href="https://www.linkedin.com/in/david-onyango-082750201/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <LinkedIn />
+              </SocialLink>
+              <SocialLink
+                href="https://github.com/DMasilva"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <GitHub />
+              </SocialLink>
+            </Box>
+          </Box>
 
-      <Container maxWidth="lg">
-        <Box component={motion.div}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={4}>
-              <motion.div variants={itemVariants}>
-                <FooterTitle variant="h6">
-                  David Owuor
-                </FooterTitle>
-                <Typography variant="body2" color="text.secondary" paragraph sx={{ maxWidth: 280 }}>
-                  Full Stack Developer & Academic Technology Specialist combining technical expertise with educational knowledge to create innovative solutions.
-                </Typography>
-                <Box sx={{ mt: 3, display: 'flex' }}>
-                  {socialLinks.map((link, index) => (
-                    <SocialButton
-                      key={index}
-                      aria-label={link.label}
-                      component="a"
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {link.icon}
-                    </SocialButton>
-                  ))}
-                </Box>
-              </motion.div>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <motion.div variants={itemVariants}>
-                <FooterTitle variant="h6">
-                  Quick Links
-                </FooterTitle>
-                <List dense disablePadding>
-                  {quickLinks.map((link, index) => (
-                    <ListItem 
-                      key={index} 
-                      disablePadding 
-                      sx={{ mb: 1 }}
-                      component={motion.li}
-                      whileHover={{ x: 5 }}
-                    >
-                      <KeyboardArrowRight fontSize="small" color="primary" sx={{ mr: 1, opacity: 0.7 }} />
-                      <FooterLink href={link.href}>
-                        {link.title}
-                      </FooterLink>
-                    </ListItem>
-                  ))}
-                </List>
-              </motion.div>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <motion.div variants={itemVariants}>
-                <FooterTitle variant="h6">
-                  Stay Updated
-                </FooterTitle>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  Subscribe to my newsletter for the latest updates on projects and tech insights.
-                </Typography>
-                <Box component="form" noValidate sx={{ mt: 2 }}>
-                  <SubscribeInput 
-                    type="email" 
-                    placeholder="Your email" 
-                  />
-                  <Button 
-                    variant="contained" 
-                    fullWidth
-                    component={motion.button}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Subscribe
-                  </Button>
-                </Box>
-              </motion.div>
-            </Grid>
-          </Grid>
-
-          <Divider sx={{ my: 5, opacity: 0.1 }} />
-
-          <Box sx={{ 
-            textAlign: 'center',
-            opacity: 0.7
-          }}>
-            <Typography variant="body2" color="text.secondary">
-              &copy; {year} David Onyango Owuor. All rights reserved.
+          <Box sx={{ borderTop: 1, borderColor: 'divider', pt: 3, textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              © {year} David Onyango Owuor. All rights reserved.
             </Typography>
           </Box>
-        </Box>
-      </Container>
-    </FooterWrapper>
+        </Container>
+      </FooterWrapper>
+
+      <BackToTop onClick={scrollToTop} aria-label="Back to top">
+        <ArrowUpward />
+      </BackToTop>
+    </>
   );
 };
 
-export default Footer; 
+export default Footer;

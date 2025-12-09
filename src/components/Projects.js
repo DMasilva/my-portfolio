@@ -1,360 +1,170 @@
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent, 
-  CardMedia, 
-  Chip, 
-  IconButton,
-  CardActions,
-  Button,
-  useTheme,
-  alpha
-} from '@mui/material';
+import React from 'react';
+import { Box, Container, Typography, Grid, Card, CardContent, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { 
-  GitHub, 
-  Language, 
-  Code, 
-  Visibility,
-  FolderSpecial,
-  Science,
-  School
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { GitHub, OpenInNew, Description } from '@mui/icons-material';
 
-// Default project images (replace with actual images in a real implementation)
-const defaultImages = {
-  research: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d',
-  web: 'https://images.unsplash.com/photo-1573164713988-8665fc963095',
-  training: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f'
-};
+const Section = styled(Box)(({ theme }) => ({
+  padding: '80px 0',
+  background: theme.palette.mode === 'dark' ? theme.palette.background.default : '#f8fafc',
+}));
+
+const SectionTitle = styled(Typography)(({ theme }) => ({
+  fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+  fontWeight: 800,
+  color: theme.palette.text.primary,
+  marginBottom: '48px',
+}));
 
 const ProjectCard = styled(Card)(({ theme }) => ({
   height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  backgroundColor: alpha(theme.palette.background.paper, 0.6),
-  backdropFilter: 'blur(10px)',
-  border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-  overflow: 'hidden',
-  position: 'relative',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '4px',
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-  }
-}));
-
-const CardOverlay = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  padding: theme.spacing(3),
-  background: `linear-gradient(to top, 
-    ${alpha(theme.palette.background.paper, 0.9)}, 
-    ${alpha(theme.palette.background.paper, 0.1)}
-  )`,
-  transition: 'all 0.3s ease',
-}));
-
-const TechnologyChip = styled(Chip)(({ theme }) => ({
-  margin: theme.spacing(0.5),
-  backgroundColor: alpha(theme.palette.primary.main, 0.1),
-  border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-  color: theme.palette.primary.main,
-  fontWeight: 500,
+  background: theme.palette.background.paper,
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: '12px',
+  transition: 'all 0.2s ease',
   '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main, 0.2),
+    borderColor: theme.palette.text.secondary,
+    boxShadow: theme.palette.mode === 'dark'
+      ? '0 4px 12px rgba(0, 0, 0, 0.3)'
+      : '0 4px 12px rgba(0, 0, 0, 0.05)',
+    transform: 'translateY(-2px)',
   },
 }));
 
-const TypeChip = styled(Chip)(({ theme, type }) => {
-  const colors = {
-    Research: {
-      bg: alpha(theme.palette.info.main, 0.1),
-      border: alpha(theme.palette.info.main, 0.3),
-      color: theme.palette.info.main
-    },
-    Training: {
-      bg: alpha(theme.palette.success.main, 0.1),
-      border: alpha(theme.palette.success.main, 0.3),
-      color: theme.palette.success.main
-    },
-    'Web App': {
-      bg: alpha(theme.palette.secondary.main, 0.1),
-      border: alpha(theme.palette.secondary.main, 0.3),
-      color: theme.palette.secondary.main
-    }
-  };
-  
-  const typeColors = colors[type] || colors['Web App'];
-  
-  return ({
-    position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2),
-    zIndex: 2,
-    backgroundColor: typeColors.bg,
-    border: `1px solid ${typeColors.border}`,
-    color: typeColors.color,
-    fontWeight: 600,
-    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)'
-  });
-});
+const ProjectTitle = styled(Typography)(({ theme }) => ({
+  fontSize: '1.5rem',
+  fontWeight: 700,
+  color: theme.palette.text.primary,
+  marginBottom: '12px',
+}));
 
-const getTypeIcon = (type) => {
-  switch (type) {
-    case 'Research':
-      return <Science />;
-    case 'Training':
-      return <School />;
-    case 'Web App':
-      return <Code />;
-    default:
-      return <FolderSpecial />;
-  }
-};
+const ProjectDescription = styled(Typography)(({ theme }) => ({
+  fontSize: '1rem',
+  lineHeight: 1.7,
+  color: theme.palette.text.secondary,
+  marginBottom: '16px',
+}));
+
+const TechTag = styled(Chip)(({ theme }) => ({
+  padding: '4px 12px',
+  background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#f1f5f9',
+  color: theme.palette.text.secondary,
+  borderRadius: '6px',
+  fontSize: '0.75rem',
+  fontWeight: 500,
+  margin: '4px 4px 4px 0',
+  height: 'auto',
+  border: 'none',
+}));
+
+const ProjectLink = styled('a')(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  fontSize: '0.875rem',
+  color: theme.palette.text.secondary,
+  textDecoration: 'none',
+  marginRight: '16px',
+  transition: 'color 0.2s ease',
+  '&:hover': {
+    color: theme.palette.text.primary,
+  },
+}));
 
 const Projects = () => {
-  const theme = useTheme();
-  const [hoveredId, setHoveredId] = useState(null);
-  
   const projects = [
     {
-      id: 1,
-      title: 'Accessible Learning Platform',
-      period: '2022 - Present',
-      technology: ['React', 'Node.js', 'MongoDB', 'Express', 'Accessibility APIs'],
-      description: 'An inclusive e-learning platform designed with accessibility at its core, ensuring educational content is available to all users regardless of abilities or disabilities.',
-      image: defaultImages.web,
-      type: 'Web App',
-      links: {
-        github: 'https://github.com/DMasilva',
-        demo: 'https://example.com'
-      }
-    },
-    {
-      id: 2,
-      title: 'Educational Technology Research',
-      period: '2021 - 2022',
-      technology: ['Data Analysis', 'R', 'SPSS', 'Survey Design'],
-      description: 'Research study examining the effectiveness of technology integration in higher education classrooms, with focus on student engagement and learning outcomes.',
-      image: defaultImages.research,
+      title: 'Hybrid Approach to Software Testing',
+      description: 'Master\'s research project integrating Large Language Models (LLMs) with traditional software testing methods to enhance efficiency and code coverage.',
+      tags: ['Java', 'Maven', 'Python', 'GPT-3', 'Research'],
       type: 'Research',
-      links: {
-        paper: 'https://example.com/research-paper'
-      }
+      date: 'May 2024 — Present',
     },
     {
-      id: 3,
-      title: 'Interactive Teaching Modules',
-      period: '2020 - 2021',
-      technology: ['JavaScript', 'HTML5', 'CSS3', 'Interactive Design'],
-      description: 'Suite of interactive teaching modules designed to enhance student understanding of complex concepts through visual demonstrations and exercises.',
-      image: defaultImages.training,
+      title: 'Theater Tours and Travels',
+      description: 'Dynamic tours and travel website allowing users to easily browse, book, and manage tours and travel amenities with an intuitive interface.',
+      tags: ['Java', 'React', 'JavaScript', 'SQL', 'Tailwind CSS'],
+      github: 'https://github.com/DMasilva',
+      type: 'Web App',
+      date: 'Feb 2024 — Aug 2024',
+    },
+    {
+      title: 'Moringa Application Portal',
+      description: 'Full-stack web application to manage student applications for Moringa Institute, featuring comprehensive application tracking and management.',
+      tags: ['JavaScript', 'React', 'Tailwind CSS', 'Ruby on Rails', 'PostgreSQL'],
+      github: 'https://github.com/DMasilva',
+      type: 'Web App',
+      date: 'Oct 2022 — Jun 2023',
+    },
+    {
+      title: 'Blackboard Ultra Migration',
+      description: 'Led comprehensive training program for students on the new Ultra interface, updating courses migrated from Blackboard Original to ensure smooth transitions.',
+      tags: ['Blackboard', 'Training', 'Course Design', 'LMS'],
       type: 'Training',
-      links: {
-        demo: 'https://example.com'
-      }
+      date: 'Ongoing',
     },
     {
-      id: 4,
-      title: 'Student Progress Dashboard',
-      period: '2020',
-      technology: ['Vue.js', 'Firebase', 'Chart.js', 'REST APIs'],
-      description: 'Real-time dashboard allowing instructors to monitor student progress, identify areas of difficulty, and provide timely interventions.',
-      image: defaultImages.web,
-      type: 'Web App',
-      links: {
-        github: 'https://github.com/DMasilva',
-        demo: 'https://example.com'
-      }
+      title: 'Zoom Phone Migration Training',
+      description: 'Developed and delivered training sessions for faculty and staff at NDSU on Zoom Phone migration, providing comprehensive support materials.',
+      tags: ['Zoom', 'Training', 'Communication', 'Documentation'],
+      type: 'Training',
+      date: 'Jun 2024',
     },
-    {
-      id: 5,
-      title: 'Assistive Technology Implementation',
-      period: '2019 - 2020',
-      technology: ['Screen Readers', 'Voice Recognition', 'Adaptive UI', 'WCAG 2.1'],
-      description: 'Implementation of assistive technologies across university systems to ensure equal access for all students, meeting and exceeding accessibility standards.',
-      image: defaultImages.research,
-      type: 'Research',
-      links: {
-        report: 'https://example.com/report'
-      }
-    }
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100
-      }
-    }
-  };
-
   return (
-    <Box component={motion.div} 
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <Grid container spacing={4}>
-        {projects.map((project) => (
-          <Grid item xs={12} sm={6} md={4} key={project.id}>
-            <motion.div 
-              variants={itemVariants}
-              whileHover={{ 
-                y: -10,
-                transition: { duration: 0.3 }
-              }}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              style={{ height: '100%' }}
-            >
-              <ProjectCard 
-                elevation={hoveredId === project.id ? 8 : 1}
-                sx={{ 
-                  transform: hoveredId === project.id ? 'scale(1.02)' : 'scale(1)',
-                }}
-              >
-                <TypeChip
-                  label={project.type}
-                  type={project.type}
-                  icon={getTypeIcon(project.type)}
-                />
-                
-                <CardMedia
-                  component="img"
-                  height="180"
-                  image={project.image}
-                  alt={project.title}
-                  sx={{ 
-                    filter: hoveredId === project.id ? 'brightness(0.85)' : 'brightness(0.7)',
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-                
-                <CardContent sx={{ flexGrow: 1, pt: 3 }}>
-                  <Typography variant="overline" color="text.secondary">
-                    {project.period}
+    <Section id="projects">
+      <Container maxWidth="lg">
+        <SectionTitle>Featured Projects</SectionTitle>
+
+        <Grid container spacing={4}>
+          {projects.map((project, index) => (
+            <Grid item xs={12} md={6} key={index}>
+              <ProjectCard elevation={0}>
+                <CardContent sx={{ p: 4 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                    <ProjectTitle>{project.title}</ProjectTitle>
+                  </Box>
+
+                  <Typography sx={{ fontSize: '0.875rem', color: '#94a3b8', mb: 2 }}>
+                    {project.date}
                   </Typography>
-                  
-                  <Typography variant="h5" component="h3" gutterBottom fontWeight={600}>
-                    {project.title}
-                  </Typography>
-                  
-                  <Typography variant="body2" color="text.secondary" paragraph sx={{ 
-                    height: 80, 
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                  }}>
-                    {project.description}
-                  </Typography>
-                  
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', pt: 1 }}>
-                    {project.technology.slice(0, 3).map((tech) => (
-                      <TechnologyChip
-                        key={tech}
-                        label={tech}
-                        size="small"
-                      />
+
+                  <ProjectDescription>{project.description}</ProjectDescription>
+
+                  <Box sx={{ mb: 3 }}>
+                    {project.tags.map((tag) => (
+                      <TechTag key={tag} label={tag} />
                     ))}
-                    {project.technology.length > 3 && (
-                      <TechnologyChip
-                        label={`+${project.technology.length - 3}`}
-                        size="small"
-                      />
+                  </Box>
+
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {project.github && (
+                      <ProjectLink href={project.github} target="_blank" rel="noopener noreferrer">
+                        <GitHub sx={{ fontSize: '1rem' }} />
+                        Code
+                      </ProjectLink>
+                    )}
+                    {project.demo && (
+                      <ProjectLink href={project.demo} target="_blank" rel="noopener noreferrer">
+                        <OpenInNew sx={{ fontSize: '1rem' }} />
+                        Live Demo
+                      </ProjectLink>
+                    )}
+                    {project.paper && (
+                      <ProjectLink href={project.paper} target="_blank" rel="noopener noreferrer">
+                        <Description sx={{ fontSize: '1rem' }} />
+                        Paper
+                      </ProjectLink>
                     )}
                   </Box>
                 </CardContent>
-                
-                <CardActions sx={{ 
-                  justifyContent: 'flex-end',
-                  p: 2,
-                  pt: 0
-                }}>
-                  {project.links.github && (
-                    <IconButton 
-                      aria-label="GitHub repository" 
-                      component="a"
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      size="small"
-                    >
-                      <GitHub />
-                    </IconButton>
-                  )}
-                  
-                  {project.links.demo && (
-                    <IconButton 
-                      aria-label="Live demo" 
-                      component="a"
-                      href={project.links.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      size="small"
-                      color="primary"
-                    >
-                      <Language />
-                    </IconButton>
-                  )}
-                  
-                  {(project.links.paper || project.links.report) && (
-                    <IconButton 
-                      aria-label="View document" 
-                      component="a"
-                      href={project.links.paper || project.links.report}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      size="small"
-                      color="secondary"
-                    >
-                      <Visibility />
-                    </IconButton>
-                  )}
-                  
-                  <Button
-                    size="small"
-                    color="primary"
-                    sx={{ ml: 1 }}
-                  >
-                    Details
-                  </Button>
-                </CardActions>
               </ProjectCard>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Section>
   );
 };
 
-export default Projects; 
+export default Projects;
