@@ -1,7 +1,6 @@
-import React, { useState, useMemo, createContext, useContext } from 'react';
+import React, { useState, useMemo, createContext } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline, Box, IconButton } from '@mui/material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
+import { CssBaseline, Box } from '@mui/material';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Bio from './components/Bio';
